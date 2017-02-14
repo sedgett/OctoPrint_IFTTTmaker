@@ -56,7 +56,7 @@ class IFTTTMakerPlugin(octoprint.plugin.StartupPlugin,
                 v2 = payload["time"]
             if 'remoteAddress' in payload:
                 v3 = payload["remoteAddress"]
-            self._send_ifttt("op-"+event, v1, v2)
+            self._send_ifttt("op-"+event, v1, v2, v3)
         else:
             self._logger.debug("Event skipped: %s" % event)
           
