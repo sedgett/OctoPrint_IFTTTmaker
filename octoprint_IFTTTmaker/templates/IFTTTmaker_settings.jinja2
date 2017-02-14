@@ -1,0 +1,35 @@
+<h2>{{ _('IFFTMaker') }}</h2>
+<p>See <a href="http://ifttt.com/maker" target=_new>ifttt.com/maker</a> for details on setting up recipies and getting your maker key.</p>
+<hr>
+<form class="form-horizontal">
+    <div class="control-group">
+        <label class="control-label">{{ _('Maker Key') }}</label>
+        <div class="controls">
+            <input type="text" class="input-block-level" data-bind="value: settings.plugins.IFTTTmaker.makerkey">
+        </div>
+    </div>
+
+	<div class="control-group">
+	<label class="control-label">{{ _('Select Events') }}</label>
+	{% set events = ["PrintStarted", "PrintFailed", "PrintDone", "PrintCancelled", "MovieDone", "ClientOpened"] %}
+	{% for event in events %}
+
+
+	<div class="controls">
+		<label class="checkbox">
+		<input type="checkbox" data-bind="checked: settings.plugins.IFTTTmaker.events.{{ event }}" title="Check to enable {{ event }}" /> <span>IFTTT trigger op-{{ event }}</span>
+		</label>
+	</div>
+
+	{% endfor %}
+	<div style="float:left;">	
+		<span class="help-block"><small>Select the Events to enable for IFTTT triggers.  Note: op- is pre-pended the the OctoPrint event name.<br>
+		e.g. Create a IFTTT action using the trigger op-MovieDone and the action to power off your printer via Wemo or another IFTTT controlled electrical device.<br>
+		(Using MovieDone allows the printer time to cooldown before being powered off)
+		</span>
+
+	</div>
+	</div>
+
+
+</form>
