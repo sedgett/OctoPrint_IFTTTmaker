@@ -72,12 +72,16 @@ class IFTTTMakerPlugin(octoprint.plugin.StartupPlugin,
 
 
     def _send_ifttt(self, trigger, value1=None, value2=None, value3=None):
-        import requests
-        payload = "{ 'value1' : value1, 'value2' : value2, 'value3' : value3}"
-        url = "https://maker.ifttt.com/trigger/" + trigger + "/with/key/" + self.makerkey
-        res = requests.post(url, data=payload)
-        self._logger.debug("URL: %s" % url)
-        self._logger.info("Trigger: %s Response:: %s" % (trigger,  res.text))
+        if self.makerkey:
+            import requests
+            payload = "{ 'value1' : value1, 'value2' : value2, 'value3' : value3}"
+            url = "https://maker.ifttt.com/trigger/" + trigger + "/with/key/" + self.makerkey
+            res = requests.post(url, data=payload)
+            self._logger.debug("URL: %s" % url)
+            self._logger.info("Trigger: %s Response: %s" % (trigger,  res.text))
+        else:
+            self._logger.info("No maker key trying to process trigger: %s" % trigger)
+        
         
                                                                                             
 ######
