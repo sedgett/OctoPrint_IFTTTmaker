@@ -15,14 +15,17 @@ class IFTTTMakerPlugin(octoprint.plugin.StartupPlugin,
 
     def on_settings_save(self, data):
         octoprint.plugin.SettingsPlugin.on_settings_save(self, data)
-        self.makerkey = self._settings.get(["makerkey"])
-        self.ClientOpen = self._settings.get_boolean(["ClientOpen"])
-        self._logger.info("Saving IFTTT Maker Key: %s" % self.makerkey)
-        
+        if (hasattr, self._settings, 'makerkey'):
+#            self.makerkey = self._settings.get(["makerkey"])
+            self._logger.info("Saving IFTTT Maker Key: %s" % self._settings.get(["makerkey"]))
+        else:
+#            self.makerkey=''
+            self._logger.info("No Maker key set while trying to save!")
+                    
     def on_after_startup(self):
         self._logger.info("IFTTT Maker Plugin Active")
-        self.makerkey = self._settings.get(["makerkey"])
-        self._logger.debug("IFTTT Maker Key: %s" % self.makerkey)
+#        self.makerkey = self._settings.get(["makerkey"])
+#        self._logger.debug("IFTTT Maker Key: %s" % self.makerkey)
 
     def get_settings_defaults(self):
         return dict(makerkey='ENTER_YOUR_MAKER_KEY',
@@ -47,7 +50,8 @@ class IFTTTMakerPlugin(octoprint.plugin.StartupPlugin,
 
     def on_event(self, event, payload):
         events = self._settings.get(['events'], merged=True)
-        
+        makerkey = self._settings.get(['makerkey'])
+#        self._logger.debug("on_event: makerkey: %s" % makerkey)
         if event in events:
             v1 = v2 = v3 = ""
             if 'file' in payload:
@@ -56,7 +60,7 @@ class IFTTTMakerPlugin(octoprint.plugin.StartupPlugin,
                 v2 = payload["time"]
             if 'remoteAddress' in payload:
                 v3 = payload["remoteAddress"]
-            self._send_ifttt("op-"+event, v1, v2, v3)
+            self._send_ifttt("op-"+event, makerkey, v1, v2, v3)
         else:
             self._logger.debug("Event skipped: %s" % event)
           
@@ -71,16 +75,13 @@ class IFTTTMakerPlugin(octoprint.plugin.StartupPlugin,
 
 
 
-    def _send_ifttt(self, trigger, value1=None, value2=None, value3=None):
-        if self.makerkey:
-            import requests
-            payload = "{ 'value1' : value1, 'value2' : value2, 'value3' : value3}"
-            url = "https://maker.ifttt.com/trigger/" + trigger + "/with/key/" + self.makerkey
-            res = requests.post(url, data=payload)
-            self._logger.debug("URL: %s" % url)
-            self._logger.info("Trigger: %s Response: %s" % (trigger,  res.text))
-        else:
-            self._logger.info("No maker key trying to process trigger: %s" % trigger)
+    def _send_ifttt(self, trigger, makerkey, value1=None, value2=None, value3=None):
+        import requests
+        payload = "{ 'value1' : value1, 'value2' : value2, 'value3' : value3}"
+        url = "https://maker.ifttt.com/trigger/" + trigger + "/with/key/" + makerkey
+        res = requests.post(url, data=payload)
+        self._logger.debug("URL: %s" % url)
+        self._logger.info("Trigger: %s Response: %s" % (trigger,  res.text))
         
         
                                                                                             
