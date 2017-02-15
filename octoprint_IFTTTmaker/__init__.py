@@ -52,7 +52,7 @@ class IFTTTMakerPlugin(octoprint.plugin.StartupPlugin,
         events = self._settings.get(['events'], merged=True)
         makerkey = self._settings.get(['makerkey'])
 #        self._logger.debug("on_event: makerkey: %s" % makerkey)
-        if event in events:
+        if event in events and events[event]:
             v1 = v2 = v3 = ""
             if 'file' in payload:
                 v1 = os.path.basename(payload["file"])
@@ -62,7 +62,7 @@ class IFTTTMakerPlugin(octoprint.plugin.StartupPlugin,
                 v3 = payload["remoteAddress"]
             self._send_ifttt("op-"+event, makerkey, v1, v2, v3)
         else:
-            self._logger.debug("Event skipped: %s" % event)
+            self._logger.info("Event skipped: %s" % event)
           
         
 #         == Events.PRINT_DONE:
