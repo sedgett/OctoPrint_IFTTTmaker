@@ -84,6 +84,21 @@ class IFTTTMakerPlugin(octoprint.plugin.StartupPlugin,
         self._logger.info("Trigger: %s Response: %s" % (trigger,  res.text))
         
 
+    def get_update_information(self):
+        return dict(
+            iftttmaker=dict(
+                displayName=self._plugin_name,
+                displayVersion=self._plugin_version,
+
+                type="github_release",
+                current=self._plugin_version,
+                user="sedgett",
+                repo="OctoPrint-IFTTTmaker",
+
+                pip="https://github.com/sedgett/OctoPrint-IFTTTmaker/archive/{target_version}.zip"
+                )
+            )
+
                                                                                             
 ######
                         
@@ -91,4 +106,7 @@ __plugin_name__ = "IFTTT Maker"
 __plugin_implementation__ = IFTTTMakerPlugin()
 
 
-
+global __plugin_hooks__
+__plugin_hooks__ = {
+                "octoprint.plugin.softwareupdate.check_config": __plugin_implementation__.get_update_information
+                    }
