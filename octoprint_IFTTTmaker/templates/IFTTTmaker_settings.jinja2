@@ -11,9 +11,9 @@
 
 	<div class="control-group">
 	<label class="control-label">{{ _('Select Events') }}</label>
+
 	{% set events = ["PrintStarted", "PrintFailed", "PrintDone", "PrintCancelled", "MovieDone", "ClientOpened"] %}
 	{% for event in events %}
-
 
 	<div class="controls">
 		<label class="checkbox">
@@ -22,8 +22,9 @@
 	</div>
 
 	{% endfor %}
+
 	<div style="float:left;">	
-		<span class="help-block"><small>Select the Events to enable for IFTTT triggers.  Note: op- is pre-pended the the OctoPrint event name.<br>
+		<span class="help-block"><small>Select the Events to enable for IFTTT triggers. <br>Note: op- is pre-pended the the OctoPrint event name.<p>
 		e.g. Create a IFTTT action using the trigger op-MovieDone and the action to power off your printer via Wemo or another IFTTT controlled electrical device.<br>
 		(Using MovieDone allows the printer time to cooldown before being powered off)
 		</span>

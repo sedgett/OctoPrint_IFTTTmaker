@@ -86,15 +86,15 @@ class IFTTTMakerPlugin(octoprint.plugin.StartupPlugin,
 
     def get_update_information(self):
         return dict(
-            iftttmaker=dict(
+            IFTTTmaker=dict(
                 displayName=self._plugin_name,
                 displayVersion=self._plugin_version,
 
                 type="github_release",
                 current=self._plugin_version,
                 user="sedgett",
-                repo="OctoPrint-IFTTTmaker",
-
+                repo="OctoPrint_IFTTTmaker",
+                stable_branch=dict(branch="master", name="Stable"),
                 pip="https://github.com/sedgett/OctoPrint-IFTTTmaker/archive/{target_version}.zip"
                 )
             )
