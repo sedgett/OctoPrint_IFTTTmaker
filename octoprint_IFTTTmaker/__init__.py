@@ -55,11 +55,15 @@ class IFTTTMakerPlugin(octoprint.plugin.StartupPlugin,
         if event in events and events[event]:
             v1 = v2 = v3 = ""
             if 'file' in payload:
-                v1 = os.path.basename(payload["file"])
+                v1 = payload["name"]
             if 'time' in payload:
                 v2 = payload["time"]
             if 'remoteAddress' in payload:
                 v3 = payload["remoteAddress"]
+            elif 'position' in payload:
+                v3 = payload["position"]
+            elif 'movie_basename' in payload:
+                v3 = payload["movie_basename"]
             self._send_ifttt("op-"+event, makerkey, v1, v2, v3)
         else:
             self._logger.info("Event skipped: %s" % event)
@@ -81,7 +85,7 @@ class IFTTTMakerPlugin(octoprint.plugin.StartupPlugin,
         url = "https://maker.ifttt.com/trigger/" + trigger + "/with/key/" + makerkey
         res = requests.post(url, data=payload)
         self._logger.info("URL: %s" % url)
-        self._logger.info("Trigger: %s Response: %s" % (trigger,  res.text))
+        self._logger.info("Trigger: %s Response: %s Payload: %s" % (trigger, res.text, payload))
         
 
     def get_update_information(self):
