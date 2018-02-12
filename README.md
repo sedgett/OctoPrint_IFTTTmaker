@@ -12,11 +12,11 @@ or manually using this URL:
 ## Configuration
 
 1. Setup the IFTTT maker channel at https://ifttt.com/maker_webhooks
-2. Get you Maker key from https://ifttt.com/services/maker_webhooks/settings (it's the bit at the end, after /use/)
-3. Login to your Octopi, goto settings, then click on IFTTTmaker
+2. Get your Maker key from https://ifttt.com/services/maker_webhooks/settings (it's the bit at the end, after /use/)
+3. Login to your Octopi, goto Settings, then click on IFTTTmaker
 4. Enter your key in the settings screen for the plugin in Octopi
 5. Select the events to send to IFTTT via settings.
-6. Create recipies on IFTTT for your new events.
+6. Create recipies on IFTTT for your new events. (See https://github.com/sedgett/OctoPrint_IFTTTmaker/wiki for more)
 	- Use op-EventName as the trigger
 	- value1 is filename (where applicable)
 	- value2 is elapsed time (where applicable)
