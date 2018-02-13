@@ -100,7 +100,7 @@ class IFTTTMakerPlugin(octoprint.plugin.StartupPlugin,
                 user="sedgett",
                 repo="OctoPrint_IFTTTmaker",
                 stable_branch=dict(branch="master", name="Stable"),
-                pip="https://github.com/sedgett/OctoPrint-IFTTTmaker/archive/{target_version}.zip"
+                pip="https://github.com/sedgett/OctoPrint_IFTTTmaker/archive/{target_version}.zip"
                 )
             )
 
